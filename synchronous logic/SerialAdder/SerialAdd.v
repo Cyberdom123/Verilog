@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 26.11.2022 13:30:48
-// Design Name: Serial Transmission
-// Module Name: serialTran
+// Create Date: 27.11.2022 13:39:01
+// Design Name: 
+// Module Name: SerialAdd
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,8 +19,6 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-//4bit transmission
 
 //D flip flop
 module dff(
@@ -87,31 +85,37 @@ dff d4(D[1], Clk, D[0]);
 
 endmodule
 
-module ParityCheck(
-  input [3:0] In,
-  output Out
-);
-  assign Out = ^In;
-endmodule
+//1bit adder
+module Add (a, b, cin, sum, cout);
+    input a, b; 
+    input cin;
+    output sum;
+    output cout; 
 
-//transmission takes 4 (depending on the number of bits) clock cycles
-module serialTran(
-    input [3:0] ParallerDin,
+    assign sum = a ^ b ^ cin;
+
+    assign cout = (a & b ) | (a & cin ) | (b & cin);
+endmodule 
+
+
+module SerialAdd(
+    input [3:0] ParallerDin1,
+    input [3:0] ParallerDin2,
     input Sel,
     input Clk,
-    output SerialDout,
-    output ParityCheckErr,
+    output sum,
     output [3:0] ParallerDout
     );
 
-    wire [1:0] ParityCheckValue;
+    wire [1:0] SerialDout;
+    wire c;
 
-    PISO4 piso(ParallerDin, Sel, Clk, SerialDout);
-    SIPO4 sipo(SerialDout, Clk, ParallerDout);
+    PISO4 piso1(ParallerDin1, Sel, Clk, SerialDout[0]);
+    PISO4 piso2(ParallerDin2, Sel, Clk, SerialDout[1]);
+
+    Add add1(SerialDout[0], SerialDout[1], c, sum, c);
 
 
-    ParityCheck parityCheckPiso(ParallerDin, ParityCheckValue[0]);
-    ParityCheck parityCheckSipo(ParallerDout, ParityCheckValue[1]);
+    SIPO4 sipo1(sum, Clk, ParallerDout);
 
-    assign ParityCheckErr = ^ParityCheckValue;
 endmodule
