@@ -39,6 +39,17 @@ module Mul4( //4bit
     Mul2 main (t1, t2, sel[1], out1);
 endmodule
 
+module Mul8( //8bit
+    input [7:0] x,
+    input [2:0] sel,
+    output out1
+    );
+    wire t1, t2;
+    Mul4 m1 (x[3:0], sel[1:0], t1);
+    Mul4 m2 (x[7:4], sel[1:0], t2);
+    Mul2 main(t1, t2, sel[2], out1);
+endmodule
+
 // 8 bit barrel divider U2
 module BarrelDivider(
     input clk,
