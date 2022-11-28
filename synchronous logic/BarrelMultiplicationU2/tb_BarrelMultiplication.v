@@ -20,26 +20,39 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module tb_BarrelMultiplication();
-//    reg clk;
-    reg [3:0] x;
-    reg [1:0] shift_n;
-    wire[3:0] y;
+    reg clk;
+    reg [7:0] x;
+    reg [3:0] shift_n;
+    wire[7:0] y;
+    wire overflow;
     
-    BarrelMultiplication uut(x, shift_n, y);
-
+    BarrelMultiplication uut(clk, x, shift_n, y, overflow);
 
     initial begin
-        x = 4'b1111;
+        clk = 0;
+        forever #1 clk = ~clk;
+    end
+
+    initial begin
+        x = -8'd15;
     end
     
     initial begin
-        shift_n = 2'b00; 
+        shift_n = 0;
         #50
-        shift_n = 2'b01; 
+        shift_n = 1;
         #50
-        shift_n = 2'b10; 
+        shift_n = 2;
         #50
-        shift_n = 2'b11;
+        shift_n = 3;
+        #50    
+        shift_n = 4;
+        #50
+        shift_n = 5;
+        #50
+        shift_n = 6;
+        #50
+        shift_n = 7;
     end
 
 endmodule
