@@ -57,8 +57,8 @@ module BarrelMultiplication(
     );
     
          
-    Mul4 b0 ({in[3], in[2], in[1], in[0]} , s_n, out[3]);
-    Mul4 b1 ({in[3], in[1], in[0],   0  } , s_n, out[2]);
-    Mul4 b2 ({in[3], in[0],   0  ,   0  } , s_n, out[1]);
-    Mul4 b3 ({in[3],   0  ,   0  ,   0  } , s_n, out[0]);
+    Mul4 b0 ({in[0], in[0], in[0], in[0]}, s_n, out[3]);
+    Mul4 b1 ({0, in[1], in[1], in[1]}, s_n, out[2]);
+    Mul4 b2 ({0,   0  , in[2], in[2]}, s_n, out[1]);
+    Mul4 b3 ({0,   0  ,   0  , in[3] }, s_n, out[0]);
 endmodule

@@ -27,25 +27,19 @@ module tb_BarrelMultiplication();
     
     BarrelMultiplication uut(x, shift_n, y);
 
+
     initial begin
         x = 4'b1111;
-        
-
-        
-//        x = 4'b0111;
-//        shift_n = 0; #50
-//        shift_n = 1; #50
-//        shift_n = 2; #50
-//        shift_n = 3; 
     end
     
-        initial begin
-        
-        shift_n = 0; #50
-        shift_n = 1; #50
-        shift_n = 2; #50
-        shift_n = 3;
-        
-        end
+    initial begin
+        shift_n = 2'b00; 
+        #50
+        shift_n = 2'b01; 
+        #50
+        shift_n = 2'b10; 
+        #50
+        shift_n = 2'b11;
+    end
 
 endmodule
