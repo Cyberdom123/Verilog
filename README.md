@@ -1,2 +1,2 @@
 # Verilog
-Digital electronic course at agh university.
+A collection of projects that we developed during FPGA programming classes at AGH University.
